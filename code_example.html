@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>D:\Tang\Kooboo_CMS\cms_sites\CMS_template_sources\cms_usage.txt.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.3_v14">
+<meta name="syntax" content="javascript">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="desert">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #ffffff; background-color: #333333; }
+body { font-family: monospace; color: #ffffff; background-color: #333333; }
+* { font-size: 1em; }
+.Special { color: #ffdead; }
+.Type { color: #bdb76b; font-weight: bold; }
+.Constant { color: #ffa0a0; }
+.Identifier { color: #98fb98; }
+.Statement { color: #f0e68c; font-weight: bold; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+--------------------AD(如果样式上有ad之类的广告用于，可能会使内容在有广告屏蔽的browser上无法显示，修改样式名称)---------------------
+<span class="Statement">if</span> <span class="Statement">class</span> or id name has <span class="Constant">'ad'</span>,maybe it will be blocked. so trim it off.
+------------------navigator(导航)------------------------
+    @foreach (<span class="Identifier">var</span> item <span class="Statement">in</span> MenuHelper.Top())
+    <span class="Identifier">{</span>
+        <span class="Statement">if</span> (item.Navigation.Show)
+        <span class="Identifier">{</span>
+                &lt;li&gt;&lt;a href=<span class="Constant">&quot;@Url.FrontUrl().PageUrl(item.FullName)&quot;</span> <span class="Statement">class</span>=<span class="Constant">&quot;@(MenuHelper.IsCurrent(item) ? &quot;</span>selected<span class="Constant">&quot; : &quot;&quot;)&quot;</span>&gt;@item.LinkText&lt;/a&gt;&lt;/li&gt;
+        <span class="Identifier">}</span>
+    <span class="Identifier">}</span>
+--------------------------navigator sub(子导航,置于导航内部)----------------------
+@<span class="Statement">if</span>(MenuHelper.Sub(@item).Count()!=0)<span class="Identifier">{</span>
+                 &lt;ul&gt;
+                    &lt;li&gt;&lt;span <span class="Statement">class</span>=<span class="Constant">&quot;top&quot;</span>&gt;&lt;/span&gt;&lt;span <span class="Statement">class</span>=<span class="Constant">&quot;bottom&quot;</span>&gt;&lt;/span&gt;&lt;/li&gt;
+                @foreach (<span class="Identifier">var</span> item2 <span class="Statement">in</span> MenuHelper.Sub(@item))
+                <span class="Identifier">{</span>
+                    <span class="Statement">if</span> (item2.Navigation.Show)
+                    <span class="Identifier">{</span>
+                        &lt;li&gt;@Html.FrontHtml().PageLink(item2.LinkText, item2.FullName)&lt;/li&gt;
+                    <span class="Identifier">}</span>
+                <span class="Identifier">}</span>&lt;/ul&gt;
+              <span class="Identifier">}</span>
+---------------------------get img src <span class="Statement">in</span> contents (获取contents内img的url)-------------------------
+@Url.Content(item.img)
+--------------------------------set different style <span class="Statement">for</span> special item <span class="Statement">in</span> query result(设置一个query内的不同样式)----------------------
+  @<span class="Identifier">{</span><span class="Statement">int</span> counter=1;
+    foreach (<span class="Identifier">var</span> item <span class="Statement">in</span> ViewBag.gallery)
+    <span class="Identifier">{</span>
+        <span class="Statement">if</span>(counter%3==0)<span class="Identifier">{</span>
+            &lt;a <span class="Statement">class</span>=<span class="Constant">&quot;no_mr&quot;</span> href=<span class="Constant">&quot;@Url.Content(item.bigImg)&quot;</span>
+              rel=<span class="Constant">&quot;lightbox[gallery]&quot;</span>&gt;&lt;img src=<span class="Constant">&quot;@Url.Content(item.img)&quot;</span>
+             alt=<span class="Constant">&quot;@item.alt&quot;</span>&gt;&lt;/a&gt;
+        <span class="Identifier">}</span><span class="Statement">else</span><span class="Identifier">{</span>
+          &lt;a href=<span class="Constant">&quot;@Url.Content(item.bigImg)&quot;</span>
+            rel=<span class="Constant">&quot;lightbox[gallery]&quot;</span>&gt;&lt;img src=<span class="Constant">&quot;@Url.Content(item.img)&quot;</span>
+           alt=<span class="Constant">&quot;@item.alt&quot;</span>&gt;&lt;/a&gt;
+        <span class="Identifier">}</span>
+        counter++;
+    <span class="Identifier">}</span>
+  <span class="Identifier">}</span>
+------------------(设置排序是要设置top值)---------------------------
+set <span class="Constant">'top'</span> <span class="Statement">in</span> advance to limit result number
+----------------mix data <span class="Statement">with</span> razor variable(混合实现动态）------------------------
+alt=<span class="Constant">&quot;CSS Templates @(counter)&quot;</span>
+---------------------------------parse html tags(解析html代码并显示)------------------
+@Html.Raw(item.content)
+---------------customfile path(自定义文件的url获取)------------------
+@Url.FrontUrl().FileUrl(<span class="Constant">&quot;customfile&quot;</span>)
+---------------------------------------
+-------------------------CreationDaate(创建时间的格式化)----------------------
+@item.UtcCreationDate
+@ViewHelper.DateTimeToString(item.UtcCreationDate, <span class="Constant">&quot;MMM dd, yyyy&quot;</span>)
+@ViewHelper.DateTimeToString(ViewBag.popular_posts.UtcCreationDate, <span class="Constant">&quot;MMM dd, yyyy&quot;</span>)
+------------------------------xml(xml文件的处理，如果xml文件直接读取不被支持，可采用此方法)-------------------------
+create a layout filled <span class="Statement">with</span> the xml content,then create a page <span class="Statement">with</span> <span class="Identifier">this</span> layout which name end <span class="Statement">with</span> <span class="Constant">&quot;.xml&quot;</span>.Go to the place refer to the xml file and replace the url <span class="Statement">with</span> page url created before.
+---------------------------------reading times(点击量，跟新contents内某一字段的应用)------------------------
+@using Kooboo.CMS.Content.Query;
+@using Kooboo.CMS.Content.Models;
+@<span class="Identifier">{</span>
+
+   <span class="Statement">if</span>(ViewBag.Article!=<span class="Statement">null</span>)
+   <span class="Identifier">{</span>
+         <span class="Identifier">var</span> textContent =(TextContent)ViewBag.Article;
+         <span class="Identifier">var</span> readings = 1;
+         <span class="Statement">if</span>(textContent<span class="Identifier">[</span><span class="Constant">&quot;Readings&quot;</span><span class="Identifier">]</span>!=<span class="Statement">null</span>)
+        <span class="Identifier">{</span>
+                readings = (<span class="Statement">int</span>)textContent<span class="Identifier">[</span><span class="Constant">&quot;Readings&quot;</span><span class="Identifier">]</span> +1 ;
+         <span class="Identifier">}</span>
+     Kooboo.CMS.Content.Services.ServiceFactory.TextContentManager.Update(Repository.Current,textContent.GetSchema(),
+textContent.UUID,<span class="Constant">&quot;Readings&quot;</span>,readings);
+
+     <span class="Identifier">}</span>
+<span class="Identifier">}</span>
+------------------------------page title  <span class="Statement">default</span> or custom(将默认的@Html.FrontHtml().HtmlTitle()改为如下代码，则页面未设置title时，以默认值显示)---------------------------
+@<span class="Identifier">{</span>
+  <span class="Statement">if</span>(Html.FrontHtml().HtmlTitle().ToString()==<span class="Constant">&quot;&quot;</span>)<span class="Identifier">{</span>
+  &lt;title&gt;Default Title KoobooCMS&lt;/title&gt;
+  <span class="Identifier">}</span><span class="Statement">else</span><span class="Identifier">{</span>
+  @Html.FrontHtml().HtmlTitle()
+  <span class="Identifier">}</span>
+  <span class="Identifier">}</span>
+-------------------------get folder path(获取某一文件所处的文件夹地址，常用语js内图片地址的设置，将folder path设置为一个js的全局变量，进而传给需要的js代码,见下例)----------------
+@<span class="Identifier">{</span>
+string path=Url.FrontUrl().FileUrl(<span class="Constant">&quot;swf/contents/piecemaker1.png&quot;</span>).ToString();
+    <span class="Statement">int</span> index= path.LastIndexOf(<span class="Constant">'/'</span>);
+    string folderpath = path.Substring(0, index+1);
+<span class="Identifier">}</span>
+------------------------handle image path <span class="Statement">in</span> js file-------------
+1.get folder path
+2.create a variable before you call the js file
+&lt;script&gt;
+    <span class="Identifier">var</span> imagePath = <span class="Constant">'@folderpath '</span>;
+&lt;/script&gt;
+&lt;script src=<span class="Constant">&quot;js/lightbox.js&quot;</span>&gt;&lt;/script&gt;
+3.change path string <span class="Statement">in</span> the js file
+<span class="Identifier">this</span>.fileLoadingImage = imagePath + <span class="Constant">'images/loading.gif'</span>;
+<span class="Identifier">this</span>.fileCloseImage = imagePath + <span class="Constant">'images/close.png'</span>;
+
+---------------------------<span class="Statement">default</span> or dynamic(动态页起初无内容显示，添加另一个viewbag。检查是否有userkey，没有则显示默认要显示的内容)--------------------------------------
+example site: example7
+@<span class="Identifier">{</span>
+    dynamic list;
+    <span class="Statement">if</span>(Request<span class="Identifier">[</span><span class="Constant">&quot;UserKey&quot;</span><span class="Identifier">]</span>==<span class="Statement">null</span>)
+    <span class="Identifier">{</span>
+    list=ViewBag.allgoods;
+    <span class="Identifier">}</span>
+    <span class="Statement">else</span>
+    <span class="Identifier">{</span>
+    list=ViewBag.goods;
+    <span class="Identifier">}</span>
+    foreach(<span class="Identifier">var</span> item <span class="Statement">in</span> list)<span class="Identifier">{</span>
+    <span class="Identifier">}</span>
+<span class="Identifier">}</span>
+
+set page URL path to <span class="Identifier">{</span>UserKey<span class="Identifier">}</span>
+set key of <span class="Statement">default</span> to UserKey
+
+href=<span class="Constant">'@Url.FrontUrl().PageUrl(&quot;post/detail&quot;,new { UserKey = item.UserKey})'</span>
+
+------------------------- pagination(分页样式自定义常用的几个property) --------------------
+find example at example6(work center).
+@<span class="Identifier">{</span>
+    PagerOptions option = <span class="Statement">new</span> PagerOptions()
+    <span class="Identifier">{</span>
+        PrevPageText=<span class="Constant">&quot;&amp;lt;&amp;lt;&quot;</span>,
+        NextPageText=<span class="Constant">&quot;&amp;gt;&amp;gt;&quot;</span>,
+        ShowPrevNext=<span class="Constant">true</span>,
+        FirstPageText=<span class="Constant">&quot;First&quot;</span>,
+        LastPageText=<span class="Constant">&quot;Last&quot;</span>,
+        ShowFirstLast=<span class="Constant">true</span>,
+        NavigationPagerItemWrapperFormatString=<span class="Constant">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span>,
+
+        ContainerTagName=<span class="Constant">&quot;ul&quot;</span>,
+        CssClass=<span class="Constant">&quot;pagination&quot;</span>,
+        NumericPagerItemWrapperFormatString=<span class="Constant">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span>,
+        CurrentPagerItemWrapperFormatString=<span class="Constant">&quot;&lt;li&gt;&lt;a class='current'&gt;{0}&lt;/a&gt;&lt;/li&gt;&quot;</span>,
+        StatisticsTextFormatString = <span class="Constant">&quot;&quot;</span>.RawLabel().ToString()
+    <span class="Identifier">}</span>;
+<span class="Identifier">}</span>
+@Html.FrontHtml().Pager(ViewBag.blog_pagging, option)
+
+
+---------------------------submit(表单提交处理为json数据,填写的数据符合规则就alert结果)--------------------------------------
+make sure all form element have their names , change <span class="Constant">'.submit'</span> and <span class="Constant">'#contact-form'</span> to fit your form struture,<span class="Statement">if</span> has <span class="Constant">'action'</span>, remove
+&lt;script type=<span class="Constant">&quot;text/javascript&quot;</span>&gt;
+  $(<span class="Identifier">function</span>()<span class="Identifier">{</span>
+      $(<span class="Constant">'#contact-form'</span>).submit(<span class="Identifier">function</span>() <span class="Identifier">{</span>
+        <span class="Identifier">var</span> jsonData = $(<span class="Identifier">this</span>).serializeObject();
+        <span class="Statement">if</span>(jsonData.author !== <span class="Constant">&quot;&quot;</span> &amp;&amp; jsonData.email !== <span class="Constant">&quot;&quot;</span> &amp;&amp; jsonData.message !== <span class="Constant">&quot;&quot;</span>)<span class="Identifier">{</span>
+          <span class="Statement">alert</span>(JSON.stringify(jsonData));
+          <span class="Statement">return</span> <span class="Constant">true</span>;
+        <span class="Identifier">}</span>
+        <span class="Statement">return</span> <span class="Constant">false</span>;
+      <span class="Identifier">}</span>);
+      $.fn.serializeObject = <span class="Identifier">function</span>() <span class="Identifier">{</span>
+      <span class="Identifier">var</span> o = <span class="Identifier">{}</span>;
+      <span class="Identifier">var</span> a = <span class="Identifier">this</span>.serializeArray();
+      $.each(a, <span class="Identifier">function</span>() <span class="Identifier">{</span>
+        <span class="Statement">if</span> (o<span class="Identifier">[</span><span class="Identifier">this</span>.name<span class="Identifier">]</span> !== <span class="Statement">undefined</span> &amp;&amp; <span class="Identifier">this</span>.name !== <span class="Constant">'__RequestVerificationToken'</span>) <span class="Identifier">{</span>
+          <span class="Statement">if</span> (!o<span class="Identifier">[</span><span class="Identifier">this</span>.name<span class="Identifier">]</span>.push) <span class="Identifier">{</span>
+            o<span class="Identifier">[</span><span class="Identifier">this</span>.name<span class="Identifier">]</span> = <span class="Identifier">[</span>o<span class="Identifier">[</span><span class="Identifier">this</span>.name<span class="Identifier">]]</span>;
+          <span class="Identifier">}</span>
+          o<span class="Identifier">[</span><span class="Identifier">this</span>.name<span class="Identifier">]</span>.push(<span class="Identifier">this</span>.value || <span class="Constant">''</span>);
+        <span class="Identifier">}</span> <span class="Statement">else</span> <span class="Identifier">{</span>
+          o<span class="Identifier">[</span><span class="Identifier">this</span>.name<span class="Identifier">]</span> = <span class="Identifier">this</span>.value || <span class="Constant">''</span>;
+        <span class="Identifier">}</span>
+      <span class="Identifier">}</span>);
+      <span class="Statement">return</span> o;
+    <span class="Identifier">}</span>;
+  <span class="Identifier">}</span>);
+&lt;/script&gt;
+
+------------------- a link submit(a标签表单提交会无法使用jquery的validate，处理方法，trigger一个隐藏的表单提交按钮) ---------------
+&lt;a <span class="Statement">class</span>=<span class="Constant">&quot;link submit&quot;</span> onclick=<span class="Constant">&quot;submitLink()&quot;</span>&gt;Send&lt;/a&gt;
+  &lt;input type=<span class="Constant">&quot;submit&quot;</span> value=<span class="Constant">&quot;submit&quot;</span> id=<span class="Constant">&quot;submit&quot;</span> style=<span class="Constant">&quot;display:none&quot;</span>/&gt;
+&lt;script type=<span class="Constant">&quot;text/javascript&quot;</span>&gt;
+<span class="Identifier">function</span> submitLink()<span class="Identifier">{</span>
+    $(<span class="Constant">&quot;#submit&quot;</span>).trigger(<span class="Constant">'click'</span>);
+  <span class="Identifier">}</span>
+&lt;/script&gt;
+--------------------newsletter(只是做简单的js弹窗提示，未实现其功能)---------------------
+remmerber to add id to form , and add name to input, remove value of action
+&lt;script type=<span class="Constant">&quot;text/javascript&quot;</span>&gt;
+$(<span class="Identifier">function</span>()<span class="Identifier">{</span>
+$(<span class="Constant">&quot;#newsletter_form&quot;</span>).submit(<span class="Identifier">function</span>()<span class="Identifier">{</span>
+<span class="Identifier">var</span> email = $(<span class="Identifier">this</span>).children(<span class="Constant">&quot;:input[name='email']&quot;</span>).val();
+<span class="Statement">if</span>(email != <span class="Statement">null</span> &amp;&amp; email != <span class="Constant">''</span>)<span class="Identifier">{</span>
+<span class="Statement">alert</span>(<span class="Constant">&quot;you email is &quot;</span> + email);
+<span class="Identifier">}</span><span class="Statement">else</span><span class="Identifier">{</span>
+<span class="Statement">alert</span>(<span class="Constant">&quot;input your email&quot;</span>);
+<span class="Identifier">}</span>
+
+<span class="Identifier">}</span>);
+<span class="Identifier">}</span>);
+&lt;/script&gt;
+--------------------------validate(表单输入规则验证)--------------------------------
+&lt;input ...... name=<span class="Constant">&quot;name&quot;</span> data-val-required=<span class="Constant">&quot;Name is required&quot;</span> data-val=<span class="Constant">&quot;true&quot;</span>/&gt;
+@Html.ValidationMessageForInput(<span class="Constant">&quot;name&quot;</span>)
+
+&lt;input type=<span class="Constant">&quot;text&quot;</span> id=<span class="Constant">&quot;email&quot;</span> name=<span class="Constant">&quot;email&quot;</span> data-val-required=<span class="Constant">&quot;Email is required&quot;</span>  data-val-regex-pattern=<span class="Constant">&quot;^</span><span class="Special">\s</span><span class="Constant">*[a-zA-Z0-9!#$%&amp;'*+</span><span class="Special">\-</span><span class="Constant">/=?^_`{|}~]+(</span><span class="Special">\.</span><span class="Constant">[a-zA-Z0-9!#$%&amp;'*+</span><span class="Special">\-</span><span class="Constant">/=?^_`{|}~]+)*@@((</span><span class="Special">\[</span><span class="Constant">[0-9]{1,3}</span><span class="Special">\.</span><span class="Constant">[0-9]{1,3}</span><span class="Special">\.</span><span class="Constant">[0-9]{1,3}</span><span class="Special">\.</span><span class="Constant">)|(([a-zA-Z0-9</span><span class="Special">\-</span><span class="Constant">]+</span><span class="Special">\.</span><span class="Constant">)+))([a-zA-Z]{2,4}|[0-9]{1,3})</span><span class="Special">\s</span><span class="Constant">*$&quot;</span> data-val-regex=<span class="Constant">&quot;Palese input an email address&quot;</span> data-val=<span class="Constant">&quot;true&quot;</span>  /&gt;
+@Html.ValidationMessageForInput(<span class="Constant">&quot;email&quot;</span>)
+
+&lt;input type=<span class="Constant">&quot;text&quot;</span> id=<span class="Constant">&quot;email&quot;</span> name=<span class="Constant">&quot;email&quot;</span> data-val-required=<span class="Constant">&quot;email is required&quot;</span> data-val=<span class="Constant">&quot;true&quot;</span> @Validator.Regex(Kooboo.RegexPatterns.EmailAddress, <span class="Constant">&quot;The email is invalid.&quot;</span>).ClientValidationRule.GenerateHtmlAttributes() /&gt;
+            @Html.ValidationMessageForInput(<span class="Constant">&quot;email&quot;</span>)
+
+--------------------------line <span class="Statement">break</span> <span class="Statement">in</span> textarea (textarea按enter不换行处理)--------------------------------
+<span class="Identifier">function</span> breakLine(e)<span class="Identifier">{</span>
+        <span class="Identifier">var</span> code;
+        <span class="Statement">if</span> (!e) <span class="Identifier">var</span> e = <span class="Statement">window</span>.<span class="Statement">event</span>;
+        <span class="Statement">if</span> (e.keyCode) code = e.keyCode;
+        <span class="Statement">else</span> <span class="Statement">if</span> (e.which) code = e.which;
+        <span class="Identifier">var</span> character = <span class="Type">String</span>.fromCharCode(code);
+    <span class="Statement">if</span>($(<span class="Constant">&quot;#ContactForm textarea&quot;</span>).is(<span class="Constant">&quot;:focus&quot;</span>)&amp;&amp; code === 13)<span class="Identifier">{</span>
+      $(<span class="Constant">&quot;#ContactForm textarea&quot;</span>).val($(<span class="Constant">&quot;#ContactForm textarea&quot;</span>).val()+<span class="Constant">&quot;</span><span class="Special">\n</span><span class="Constant">&quot;</span>);
+    <span class="Identifier">}</span>
+  <span class="Identifier">}</span>
+  <span class="Statement">document</span>.onkeydown=breakLine;
+
+---------------------- kooboo description(kooboo说明摘录)-------------------------------
+Welcome to Kooboo
+&lt;p&gt;&lt;a href=<span class="Constant">&quot;<a href="http://www.kooboo.com">http://www.kooboo.com</a>&quot;</span>&gt;Kooboo&lt;/a&gt; is an international web development firm <span class="Statement">with</span> its core development team based <span class="Statement">in</span> China. Kooboo contains products and practices to meet all your web development needs, allowing you complete freedom <span class="Statement">in</span> development. Kooboo comprises Kooboo products (Design tools, CMS, Ecommerce, and Newsletters), Kooboo people, Kooboo service, and Kooboo network.&lt;/p&gt;
+&lt;p&gt;
+&lt;strong&gt;Fully featured simple UI&lt;/strong&gt;&lt;br/&gt;
+Our backend utilizes the Metro Style UI <span class="Statement">with</span> intuitive menus and tooltips. The content editor uses an inline editor to edit <span class="Statement">static</span> or dynamic content directly at the front site.&lt;br/&gt;
+
+&lt;strong&gt;Cloud perfomance&lt;/strong&gt;&lt;br/&gt;
+We support XML, SQL and Non-SQL databases and are 100% compatible <span class="Statement">with</span> Microsoft Azure Cloud. This provides reliable solutions <span class="Statement">for</span> high traffic websites.&lt;br/&gt;
+
+&lt;strong&gt;Quick learning curve&lt;/strong&gt;&lt;br/&gt;
+Developing a Kooboo CMS site is very similar to developing a standard website. Developing a module is similar to working on an ASP.NET MVC area.&lt;br/&gt;
+
+&lt;strong&gt;Enterprise CMS&lt;/strong&gt;&lt;br/&gt;
+Workflow, version control, asset relation management, multi-channeling, incremental deployment, SEO and tracking tool, and content delivery. Our all-<span class="Statement">in</span>-one <span class="Statement">package</span> works just <span class="Statement">for</span> you.&lt;br/&gt;
+
+&lt;strong&gt;Open source&lt;/strong&gt;&lt;br/&gt;
+Released under the Revised BSD License <span class="Statement">with</span> no burden to purchase or advertising clause. Modify and use the source code as you like, so <span class="Statement">long</span> as you comply <span class="Statement">with</span> 3-clause <span class="Statement">in</span> the license.&lt;br/&gt;
+
+&lt;strong&gt;Multilingual solution&lt;/strong&gt;&lt;br/&gt;
+Enables you to create independent sites or sites that share content, pages, and modules. A single database can be used <span class="Statement">for</span> multiple front sites.&lt;br/&gt;
+&lt;/p&gt;
+-----------------------------------------Remove Tag P(Tinymce编辑器会自动加p标签包围输入的html代码，有时会因此导致样式问题，此函数用于去除这一标签，有两部分，一部分用于htmlblock内容(常用)，一部分用于content数据库的内容)---------------------------
+---------------- <span class="Statement">for</span> htmlBlock-------------
+@functions <span class="Identifier">{</span>
+    <span class="Statement">public</span> <span class="Statement">static</span> HtmlString RemoveP(IHtmlString source)
+    <span class="Identifier">{</span>
+        <span class="Type">String</span> result = source.ToString();
+        <span class="Statement">if</span> (result.IndexOf(<span class="Constant">&quot;&lt;/var&gt;&lt;p&gt;&quot;</span>) != -1)
+        <span class="Identifier">{</span>
+            result = result.Replace(<span class="Constant">&quot;&lt;/var&gt;&lt;p&gt;&quot;</span>, <span class="Constant">&quot;&lt;/var&gt;&quot;</span>);
+            result = result.Replace(<span class="Constant">&quot;&lt;/p&gt;&lt;var&quot;</span>, <span class="Constant">&quot;&lt;var&quot;</span>);
+            <span class="Statement">return</span> <span class="Statement">new</span> HtmlString(result);
+        <span class="Identifier">}</span>
+        <span class="Statement">if</span> (result.IndexOf(<span class="Constant">&quot;&lt;p&gt;&quot;</span>) != -1)
+        <span class="Identifier">{</span>
+            result = result.Replace(<span class="Constant">&quot;&lt;p&gt;&quot;</span>, <span class="Constant">&quot;&quot;</span>);
+            result = result.Replace(<span class="Constant">&quot;&lt;/p&gt;&quot;</span>, <span class="Constant">&quot;&quot;</span>);
+        <span class="Identifier">}</span>
+        <span class="Statement">return</span> <span class="Statement">new</span> HtmlString(result);
+    <span class="Identifier">}</span>
+<span class="Identifier">}</span>
+----------------------- <span class="Statement">for</span> contents ----------------
+@functions <span class="Identifier">{</span>
+    <span class="Statement">public</span> <span class="Statement">static</span> <span class="Type">String</span> RemoveP(<span class="Type">String</span> source)
+    <span class="Identifier">{</span>
+        <span class="Type">String</span> result = source.ToString();
+        <span class="Statement">if</span> (result.IndexOf(<span class="Constant">&quot;&lt;/var&gt;&lt;p&gt;&quot;</span>) != -1)
+        <span class="Identifier">{</span>
+            result = result.Replace(<span class="Constant">&quot;&lt;/var&gt;&lt;p&gt;&quot;</span>, <span class="Constant">&quot;&lt;/var&gt;&quot;</span>);
+            result = result.Replace(<span class="Constant">&quot;&lt;/p&gt;&lt;var&quot;</span>, <span class="Constant">&quot;&lt;var&quot;</span>);
+            <span class="Statement">return</span> result;
+        <span class="Identifier">}</span>
+        <span class="Statement">if</span> (result.IndexOf(<span class="Constant">&quot;&lt;p&gt;&quot;</span>) != -1)
+        <span class="Identifier">{</span>
+            result = result.Replace(<span class="Constant">&quot;&lt;p&gt;&quot;</span>, <span class="Constant">&quot;&quot;</span>);
+            result = result.Replace(<span class="Constant">&quot;&lt;/p&gt;&quot;</span>, <span class="Constant">&quot;&quot;</span>);
+        <span class="Identifier">}</span>
+        <span class="Statement">return</span> result;
+    <span class="Identifier">}</span>
+<span class="Identifier">}</span>
+---------------------- search(搜索功能)----------------------------
+1,database-&gt;search-&gt;setting,Route fields : UserKey -&gt; <span class="Identifier">{</span>UserKey<span class="Identifier">}</span>
+2,database-&gt;search-&gt;indexed data , select the one created , rebuild
+3,search form and search page , refer to smaple site( notice : method=<span class="Constant">&quot;get&quot;</span>)
+@foreach (<span class="Identifier">var</span> item <span class="Statement">in</span> results)
+<span class="Identifier">{</span>
+  &lt;li&gt;
+    &lt;a href=<span class="Constant">&quot;javascript:;&quot;</span>&gt;@Html.Raw(item.HighlightedTitle)&lt;/a&gt;
+    &lt;div <span class="Statement">class</span>=<span class="Constant">&quot;info&quot;</span>&gt;
+    &lt;p&gt;@Html.Raw((((TextContent)item.NativeObject))<span class="Identifier">[</span><span class="Constant">&quot;Answer&quot;</span><span class="Identifier">]</span>.ToString())&lt;/p&gt;
+    &lt;div <span class="Statement">class</span>=<span class="Constant">&quot;helpful&quot;</span> id=<span class="Constant">&quot;@(((TextContent)item.NativeObject).UUID)&quot;</span>&gt;
+    &lt;em <span class="Statement">class</span>=<span class="Constant">&quot;question&quot;</span>&gt;@(<span class="Constant">&quot;Was this question helpful?&quot;</span>.Label())
+    &lt;a <span class="Statement">class</span>=<span class="Constant">&quot;fg-color-green&quot;</span> href=<span class="Constant">&quot;javascript:;&quot;</span>&gt;@(<span class="Constant">&quot;Yes&quot;</span>.Label())&lt;/a&gt;
+    &lt;a <span class="Statement">class</span>=<span class="Constant">&quot;fg-color-red&quot;</span> href=<span class="Constant">&quot;javascript:;&quot;</span>&gt;@(<span class="Constant">&quot;No&quot;</span>.Label())&lt;/a&gt;
+    &lt;/em&gt;
+    &lt;em <span class="Statement">class</span>=<span class="Constant">&quot;thanks&quot;</span>&gt;@(<span class="Constant">&quot;Thank you for the feedback!&quot;</span>.Label())&lt;/em&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/li&gt;
+<span class="Identifier">}</span>
+
+------------------------------ query emebed contents -----------------
+ @foreach (<span class="Identifier">var</span> item <span class="Statement">in</span> ((Kooboo.CMS.Content.Models.TextContent)ViewBag.works).Children(<span class="Constant">&quot;work_pictures&quot;</span>))
+<span class="Identifier">{</span>
+
+  &lt;div <span class="Statement">class</span>=<span class="Constant">&quot;thumb&quot;</span> &gt;&lt;img src=<span class="Constant">&quot;@item.ToList().Where(o=&gt;o.Key == &quot;</span>img<span class="Constant">&quot;).FirstOrDefault().Value&quot;</span> alt=<span class="Constant">&quot;Thumbnail&quot;</span> /&gt;&lt;/div&gt;
+<span class="Identifier">}</span>
+
+------------- query relation folders contents ----------------
+IEnumerable&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryFolder = ((Kooboo.CMS.Content.Models.TextContent)item).Categories(<span class="Constant">&quot;work_categories&quot;</span>);
+         List&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryList = categoryFolder.ToList();
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->
