@@ -33,13 +33,25 @@
           <h1>Kooboocms-learning</h1>
           <p>Learning howto build a website with koobooCMS</p>
         </div>
-
         <h3>some resources</h3>
         <ul>
           <li><a href="code_example.html">useful code example collections</a></li>
           <li><a href="http://www.kooboo.com/documents">cms document</a></li>
         </ul>
+      </section>
 
+      <section>
+        <h3>实习学生注意项</h3>
+        <ul>
+          <li>文件的命名：以网页内的网页标题或logo名来命名，site_title.zip, site_title_620x340.png(jpg), site_title.txt</li>
+          <li>发送给我时将上述三个文件放在一个文件夹内，文件夹命名为“标题_制作者”(siteTitle_yourName)</li>
+        </ul>
+        <h3>实习学生制作模板时常见问题</h3>
+        <ul>
+          <li>layout内head部分的link,script,title未做处理或处理不彻底,放在scripts和theme下的分别使用@Html.FrontHtml().RegisterStyles()和@Html.FrontHtml().RegisterScripts()</li>
+          <li>body部分底部的script引用文件链接未处理,target.js置于cms的customfiles下的js文件夹内src="js/target.js" ==> src="@Url.FrontUrl().FileUrl("js/target.js")"</li>
+          <li>注意css文件顺序，js文件顺序</li>
+        </ul>
       </section>
 
     </div>
