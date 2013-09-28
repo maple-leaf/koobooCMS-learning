@@ -856,3 +856,56 @@ footer {
     display: none;
   }
 }
+
+
+
+/* code sample highlight */
+.code-samples {
+  counter-reset: codeCount;
+  margin-top: 80px;
+}
+.code-sample {
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  margin-top: 20px;
+  counter-increment: codeCount;
+}
+.code-sample.parent {
+  counter-reset: codeCount2;
+}
+.code-sample h2.title {
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+.code-sample .title:before {
+  content: counter(codeCount) ": ";
+  color: #C1C911;
+  margin-right: 5px;
+  font-style: italic;
+}
+.code-sample div.code {
+  margin-bottom: 5px;
+  padding-left: 10px;
+}
+.code-sample div.code>div {
+  display: none;
+}
+.code-sample .code .syntaxhighlighter {
+  padding: 5px 0;
+}
+.code-sample .toolbar_item.command_help.help {
+  display: none;
+}
+.code-sample.parent .code-sample {
+  margin-left: 30px;
+  counter-increment: codeCount2;
+}
+.code-sample .code-sample h3.title:before {
+  content: counter(codeCount2);
+}
+.code-sample button {
+  border: none;
+  background-color: #eb2;
+  padding: 5px;
+}
