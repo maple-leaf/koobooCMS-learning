@@ -497,7 +497,72 @@ IEnumerable&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryFolder = ((Koob
 </pre>
 </div>
 </section>
+<section class="code-sample">
+<h2 class="title">Make ContactUs form using kooboo4.2</h2>
+<div class="code">
+<pre class="brush: js">
+// 1. create a submission at 'Developmeng->Submission setting', give a name and choose plugin 'ContactUsPlugin', the body value can be like this(you can find it at SimpleSite) ->
+	&lt;table&gt;
+			&lt;tr&gt;
+			&lt;td&gt;
+			From:
+			&lt;/td&gt;
+			&lt;td&gt;
+			{From}
+			&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+			&lt;td&gt;
+			Subject:
+			&lt;/td&gt;
+			&lt;td&gt;
+			{Subject}
+			&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+			&lt;td&gt;
+			Body:
+			&lt;/td&gt;
+			&lt;td&gt;
+			{Body}
+			&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;/table&gt;
+// 2. if you can to change mapping field of from, you need to add a parameter setting, click add button ->
+from -> myfrom(correponding to email input's name attribute of contact form)
+// 3. add action to contact form ->
+&lt;form method=&quot;post&quot; action=&quot;@Url.FrontUrl().SubmissionUrl(&quot;ContactUs&quot;)&quot; id=&quot;contact-form&quot;&gt;
+// 4. and then go to add your smtp server at 'System->Setting->SMTP'. Well, everything done.
+/* 5. alert message when smtp server doesn't be configured ->
+ &lt;script&gt;
+   $(&#39;#contact-form&#39;).submit(function(e){
+     e.preventDefault();
+   	 alert(&quot;You need to set smtp server at &#39;System-&gt;Setting-&gt;SMTP&#39; in order to use this function.&quot;);
+   });
+&lt;/script&gt;
+</pre>
+</div>
+</section>
 
+<section class="code-sample">
+<h2 class="title">use membership in kooboo4.2</h2>
+<div class="code">
+<pre class="brush: html">
+you can learn this from samplesite. here is somethings you should notice:
+1, if you need user be proved by using email certification , you need to set 'isApproved' to false(setting of RegisterMemberPlugin) and set correct smtp server(System->Setting->SMTP)
+2, you need to submit form using ajax in order to make page redirection work well, you can find sample js code at 'app.js' of SmapleSite. If you use this sample code, add 'class="ajaxForm" to form
+</pre>
+</div>
+</section>
+<section class="code-sample" style="display:none">
+<h2 class="title"> query relation folders contents </h2>
+<div class="code">
+<pre class="brush: js">
+IEnumerable&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryFolder = ((Kooboo.CMS.Content.Models.TextContent)item).Categories(&quot;work_categories&quot;);
+         List&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryList = categoryFolder.ToList();
+</pre>
+</div>
+</section>
     </div>
     <footer>
 
