@@ -860,6 +860,16 @@ footer {
 
 
 /* code sample highlight */
+.ctrl {
+  border: none;
+  background-color: #eb2;
+  padding: 5px;
+}
+header .ctrl {
+  position: absolute;
+  bottom: 3px;
+  right: 30px;
+}
 .code-samples {
   counter-reset: codeCount;
   margin-top: 80px;
@@ -888,9 +898,6 @@ footer {
   margin-bottom: 5px;
   padding-left: 10px;
 }
-.code-sample div.code>div {
-  display: none;
-}
 .code-sample .code .syntaxhighlighter {
   padding: 5px 0;
 }
@@ -903,9 +910,4 @@ footer {
 }
 .code-sample .code-sample h3.title:before {
   content: counter(codeCount2);
-}
-.code-sample button {
-  border: none;
-  background-color: #eb2;
-  padding: 5px;
 }

@@ -16,6 +16,7 @@
 <body>
     <header>
       <h1 style="text-align: center; margin-top: 15px;"> Kooboo CMS Code Sample</h1> 
+      <button class="ctrl">Collapse All</button>
     </header>
     <div id="main" class="code-samples">
 <section class="code-sample">
@@ -575,7 +576,7 @@ IEnumerable&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryFolder = ((Koob
       SyntaxHighlighter.defaults['toolbar'] = false;
       SyntaxHighlighter.all();
       $(function(){
-        $('.code-sample div.code').prepend("<button>Expand Code</button>");
+        $('.code-sample div.code').prepend("<button class='ctrl'>Collapse Code</button>");
         $('.code-sample button').click(function(){
           var target = $(this).siblings('div')
           if(target.is(':visible')){
@@ -584,6 +585,25 @@ IEnumerable&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryFolder = ((Koob
           }else{
             target.slideToggle('fast');
             $(this).text('Collapse Code');
+          }
+        });
+        $('header .ctrl').click(function(){
+          if($(this).text()==="Collapse All"){
+            $('div.code>div').slideUp();
+            $(this).text("Expand All");
+            $('div.code .ctrl').each(function(){
+              if($(this).text() === "Collapse Code"){
+                $(this).text("Expand Code");
+              }
+            });
+          }else{
+            $('div.code>div').slideDown();
+            $(this).text("Collapse All");
+            $('div.code .ctrl').each(function(){
+              if($(this).text() === "Expand Code"){
+                $(this).text("Collapse Code");
+              }
+            });
           }
         });
       });
