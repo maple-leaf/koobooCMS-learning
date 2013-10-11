@@ -60,14 +60,6 @@ if class or id name has &#39;ad&#39;,maybe it will be blocked. so trim it off.
 </div>
 </section>
 <section class="code-sample">
-<h2 class="title">get img src in contents (获取contents内img的url)</h2>
-<div class="code">
-<pre class="brush: js">
-@Url.Content(item.img)
-</pre>
-</div>
-</section>
-<section class="code-sample">
 <h2 class="title">set different style for special item in query result(设置一个query内的不同样式)</h2>
 <div class="code">
 <pre class="brush: js">
@@ -86,14 +78,6 @@ if class or id name has &#39;ad&#39;,maybe it will be blocked. so trim it off.
         counter++;
     }
   }
-</pre>
-</div>
-</section>
-<section class="code-sample">
-<h2 class="title">(设置排序是要设置top值)</h2>
-<div class="code">
-<pre class="brush: js">
-set &#39;top&#39; in advance to limit result number
 </pre>
 </div>
 </section>
@@ -529,11 +513,19 @@ IEnumerable&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryFolder = ((Koob
 			&lt;/td&gt;
 			&lt;/tr&gt;
 			&lt;/table&gt;
+
 // 2. if you can to change mapping field of from, you need to add a parameter setting, click add button ->
 from -> myfrom(correponding to email input's name attribute of contact form)
+
 // 3. add action to contact form ->
 &lt;form method=&quot;post&quot; action=&quot;@Url.FrontUrl().SubmissionUrl(&quot;ContactUs&quot;)&quot; id=&quot;contact-form&quot;&gt;
+ @Html.AntiForgeryToken()
+
 // 4. and then go to add your smtp server at 'System->Setting->SMTP'. Well, everything done.
+smtp.126.com
+epitomy_noreply
+epitomy_noreply@126.com
+
 /* 5. alert message when smtp server doesn't be configured ->
  &lt;script&gt;
    $(&#39;#contact-form&#39;).submit(function(e){
@@ -555,12 +547,19 @@ you can learn this from samplesite. here is somethings you should notice:
 </pre>
 </div>
 </section>
-<section class="code-sample" style="display:none">
-<h2 class="title"> query relation folders contents </h2>
+<section class="code-sample">
+<h2 class="title">convert DataRulePagedList to list</h2>
 <div class="code">
 <pre class="brush: js">
-IEnumerable&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryFolder = ((Kooboo.CMS.Content.Models.TextContent)item).Categories(&quot;work_categories&quot;);
-         List&lt;Kooboo.CMS.Content.Models.TextContent&gt; categoryList = categoryFolder.ToList();
+((Kooboo.CMS.Sites.DataRule.DataRulePagedList)ViewBag.gallery).ToList();
+</pre>
+</div>
+</section>
+<section class="code-sample" style="display:none">
+<h2 class="title">sample</h2>
+<div class="code">
+<pre class="brush: js">
+sample
 </pre>
 </div>
 </section>
