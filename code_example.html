@@ -440,6 +440,14 @@ Enables you to create independent sites or sites that share content, pages, and 
 1,database-&gt;search-&gt;setting,Route fields : UserKey -&gt; {UserKey}
 2,database-&gt;search-&gt;indexed data , select the one created , rebuild
 3,search form and search page , refer to smaple site( notice : method=&quot;get&quot;)
+&lt;div class=&quot;searchbox&quot;&gt;
+  &lt;form action=&quot;@Url.FrontUrl().PageUrl(&quot;search&quot;)&quot; method=&quot;get&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;key&quot; value=&quot;@Page_Context.Current.PageRequestContext.AllQueryString[&quot;key&quot;]&quot;/&gt;
+    &lt;button type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+
+4, search page
 @foreach (var item in results)
 {
   &lt;li&gt;
