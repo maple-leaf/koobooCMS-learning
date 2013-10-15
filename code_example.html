@@ -441,7 +441,7 @@ Enables you to create independent sites or sites that share content, pages, and 
 2,database-&gt;search-&gt;indexed data , select the one created , rebuild
 3,search form and search page , refer to smaple site( notice : method=&quot;get&quot;)
 &lt;div class=&quot;searchbox&quot;&gt;
-  &lt;form action=&quot;@Url.FrontUrl().PageUrl(&quot;search&quot;)&quot; method=&quot;get&quot;&gt;
+  &lt;form action=&quot;@Url.FrontUrl().PageUrl(&quot;Search&quot;)&quot; method=&quot;get&quot;&gt;
     &lt;input type=&quot;text&quot; name=&quot;key&quot; value=&quot;@Page_Context.Current.PageRequestContext.AllQueryString[&quot;key&quot;]&quot;/&gt;
     &lt;button type=&quot;submit&quot;&gt;Search&lt;/button&gt;
   &lt;/form&gt;
@@ -465,7 +465,7 @@ Enables you to create independent sites or sites that share content, pages, and 
 @foreach (var item in results)
 {
   &lt;li&gt;
-    &lt;a href=&quot;javascript:;&quot;&gt;@Html.Raw(item.HighlightedTitle)&lt;/a&gt;
+    &lt;a href=&quot;@item.Url&quot;&gt;@Html.Raw(item.HighlightedTitle)&lt;/a&gt;
     &lt;div class=&quot;info&quot;&gt;
     &lt;p&gt;@Html.Raw((((TextContent)item.NativeObject))[&quot;Answer&quot;].ToString())&lt;/p&gt;
     &lt;div class=&quot;helpful&quot; id=&quot;@(((TextContent)item.NativeObject).UUID)&quot;&gt;
