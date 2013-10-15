@@ -577,6 +577,69 @@ you can learn this from samplesite. here is somethings you should notice:
 </pre>
 </div>
 </section>
+<section class="code-sample parent">
+<h2 class="title">two loop when query contents</h2>
+<section class="code-sample">
+<h3>不分页</h3>
+<div class="code">
+<pre class="brush: js">
+@{
+for (int i = 0 ; i  &lt; ViewBag.galleries.Length; )
+{
+&lt;div class=&quot;services&quot;&gt;
+  &lt;section&gt;
+    &lt;ul class=&quot;lb-album&quot;&gt;
+      @for (int j = 0; j &lt; 4  &amp;&amp; i  &lt; ViewBag.galleries.Length; j++, i++){
+      var item = ViewBag.galleries[i];
+
+      &lt;li class=&quot;test&quot;&gt;
+        &lt;a href=&quot;@item.link&quot;&gt;
+          &lt;img src=&quot;@item.img&quot; alt=&quot;&quot;&gt;
+          &lt;span&gt; &lt;/span&gt;
+        &lt;/a&gt;
+        &lt;div class=&quot;lb-overlay&quot; id=&quot;@item.link&quot;&gt;
+          &lt;img src=&quot;@item.img&quot; alt=&quot;&quot;&gt;
+          &lt;a href=&quot;#page&quot; class=&quot;lb-close&quot;&gt; &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;p&gt;@item.excerpt&lt;/p&gt;
+        &lt;div class=&quot;button&quot;&gt;
+          &lt;a href=&quot;@Url.FrontUrl().PageUrl(&quot;Services/Detail&quot;, new {UserKey = item.Userkey})&quot;&gt;&lt;button class=&quot;btn btn-8 btn-8a&quot;&gt;@(&quot;view more&quot;.Label())&lt; tton&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+          }
+    &lt;/ul&gt;
+  &lt;/section&gt;
+&lt;/div&gt;
+}
+}
+</pre>
+</div>
+</section>
+<section class="code-sample">
+<h3>分页</h3>
+<div class="code">
+<pre class="brush: js">
+@{
+    for (int i = 0, k = (ViewBag.gallery.CurrentPageIndex - 1) * ViewBag.gallery.PageSize; i &lt; ViewBag.gallery.PageSize &amp;&amp; (i + k) &lt; ViewBag.gallery.TotalItemCount; ){
+   &lt;div class=&quot;section group&quot;&gt;
+     @for (int j = 0; j &lt; 4 &amp;&amp; i &lt; ViewBag.gallery.PageSize &amp;&amp; (i + k) &lt; ViewBag.gallery.TotalItemCount; j++, i++)
+     {
+
+         var item = ((Kooboo.CMS.Sites.DataRule.DataRulePagedList)ViewBag.gallery).ToList()[i];
+        
+      &lt;div class=&quot;gallery_1_of_4 images_1_of_4&quot;&gt;
+           &lt;a class=&quot;fancybox&quot; href=&quot;@item[&quot;img&quot;]&quot; data-fancybox-group=&quot;gallery&quot; title=&quot;@item[&quot;title&quot;]&quot;&gt;&lt;img src=&quot;@item[&quot;img&quot;]&quot; alt=&quot;&quot;&gt;&lt;span&gt; &lt;/span&gt;&lt;/a&gt;
+           &lt;h3&gt;@item[&quot;title&quot;]&lt;/h3&gt;
+        &lt;p&gt;@item[&quot;summary&quot;]&lt;span&gt;&lt;a href=&quot;@Url.FrontUrl().PageUrl(&quot;gallery/Detail&quot;, new { gallery = item[&quot;UserKey&quot;] })&quot;&gt;@(&quot;[...]&quot;.Label())&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+       &lt;/div&gt;
+     
+     }
+  }
+}
+</pre>
+</div>
+</section>
+</section>
 <section class="code-sample" style="display:none">
 <h2 class="title">sample</h2>
 <div class="code">
