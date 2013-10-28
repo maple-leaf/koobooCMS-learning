@@ -1,0 +1,32 @@
+1.html souce code
+2. cms
+(1) create site
+(2) create layout
+
+views -->           --> page
+views -->  layout    -->page 
+views -->             -->page
+ 看结构，帅选出相同，去除掉不一样的
+
+ (3)create page:
+ 	命名，是否要在navigation（导航栏）中显示，显示的文本时什么
+ 	save and publish
+ (4)preview:
+ 	预览建好的页面
+ (5)上传样式
+ 	所有的样式文件打包成zip文件；
+ 	到开发->主题， 建立文件夹，命名Default，进入文件夹，上传（upload）打包好的zip文件;
+ (6)到刚建立的layout里应用样式：
+ 	右边的layout帮助->html头->应用样式,点旁边的button
+ (7)把layout里面的不需要的link删掉
+
+ (8)使用数据库
+ 	1,content->内容类型, 建立数据类型，content-type常用的有四种:textbox,file,textare,tinymce。图片类的使用file
+ 	2,content->内容, 建立数据,选取刚建立的数据类型,上传后记得published
+ 	3,开发->views（视图），到需要引用的view里，在右侧的“数据查询”，添加数据，命名好保存即可。
+ 	4，在右侧刚添加的数据查询项目上第二个图标可以得到示例代码，根据代码去修改模板的代码.
+(9)Label和HtmlBlock
+(10) Views页面的制作草稿
+
+ 	qq: 1194547636
+ 	group: 237048334
