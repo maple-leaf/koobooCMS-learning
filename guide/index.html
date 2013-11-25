@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Kooboo CMS Guide Doc</title>
+        <link rel="stylesheet" href="bower_components\bootstrap\dist\css\bootstrap.min.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+        <script src="bower_components\jquery\jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="bower_components\bootstrap\dist\js\bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="affix navbar navbar-default">
+                        <ul class="nav">
+                            <li><a href="installation.html">Download&Installation</a></li>
+                            <li><a href="createSite.html">Create site</a></li>
+                            <li><a href="developSite.html">Develop site</a></li>
+                            <li><a href="extra.html">Extra</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="content">test</div>
+                </div>
+            </div>
+        </div>
+        <script>
+        $('.nav a').click(function(e){
+            e.preventDefault();
+            $('#content').load($(this).attr('href'));
+        });
+        </script>
+    </body>
+</html>

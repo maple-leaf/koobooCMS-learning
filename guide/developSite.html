@@ -1,0 +1,65 @@
+<html><head><link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/js/bootstrap.min.js'></head><body><h2 id="developyoursite">Develop your site</h2>
+
+<p>Check this development part at 
+<a href="http://www.kooboo.com/docs/Kooboo-CMS/kooboo_development">Official Guide</a></p>
+
+<h2 id="somewordexplanation">Some word explanation :</h2>
+
+<h3 id="layout">Layout:</h3>
+
+<p>Page1:</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
+        &lt;title&gt;Page Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class="main"&gt;
+            &lt;ul&gt;&lt;li&gt; different part&lt;/li&gt;&lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class="footer"&gt;footer&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Page2: </p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
+        &lt;title&gt;Page Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class="main"&gt;
+            &lt;div&gt; different part&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="footer"&gt;footer&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>This two page are same except <code>main</code> section. If we remove html within main section , we get same html structure as below:</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
+        &lt;title&gt;Page Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class="main"&gt;
+
+        &lt;/div&gt;
+        &lt;div class="footer"&gt;footer&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>This is <code>Layout</code> for these two pages.</p>
+
+<h3 id="view">View</h3>
+
+<p>We can insert <code>&lt;ul&gt;&lt;li&gt; different part&lt;/li&gt;&lt;/ul&gt;</code> to layout to get complete page1, so we call <code>&lt;ul&gt;&lt;li&gt; different part&lt;/li&gt;&lt;/ul&gt;</code> is  a <code>View</code> for page1.</p></body></html>
