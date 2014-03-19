@@ -640,11 +640,68 @@ for (int i = 0 ; i  &lt; ViewBag.galleries.Length; )
 </div>
 </section>
 </section>
+<section class="code-sample">
+<h2 class="title">ajaxForm(Login&Signup, etc)</h2>
+<div class="desc">
+    <p>Add ajaxForm class to form node. Add below js code to a js file(exist file or new file)</p>
+</div>
+<div class="code">
+<pre class="brush: js">
+ $(function () {
+    
+    $('.ajaxForm').each(function () {
+        var form = $(this);
+        form.ajaxForm({
+            sync: true,
+            beforeSerialize: function ($form, options) {
+            },
+            beforeSend: function () {
+                var form = $(this);
+                form.find("[type=submit]").addClass("disabled").attr("disabled", true);
+            },
+            beforeSubmit: function (arr, $form, options) {
+            },
+            success: function (responseData, statusText, xhr, $form) {
+                form.find("[type=submit]").removeClass("disabled").removeAttr("disabled");
+                if (!responseData.Success) {
+                    var validator = form.validate();
+                    //                            var errors = [];
+                    for (var i = 0; i < responseData.FieldErrors.length; i++) {
+                        var obj = {};
+                        var fieldName = responseData.FieldErrors[i].FieldName;
+                        if (fieldName == "") {
+                            alert(responseData.FieldErrors[i].ErrorMessage);
+                        }
+                        obj[fieldName] = responseData.FieldErrors[i].ErrorMessage;
+                        validator.showErrors(obj);
+                    }
+                }
+                else {
+                    if (responseData.RedirectUrl != null) {
+                        location.href = responseData.RedirectUrl;
+                    }
+                    else {
+                        location.reload();
+                    }
+
+                }
+            },
+            error: function () {
+                var form = $(this);
+                form.find("[type=submit]").removeClass('disabled').removeAttr('disabled');
+            }
+
+        });
+    })
+
+})
+</pre>
+</div>
+</section>
 <section class="code-sample" style="display:none">
 <h2 class="title">sample</h2>
 <div class="code">
 <pre class="brush: js">
-sample
 </pre>
 </div>
 </section>

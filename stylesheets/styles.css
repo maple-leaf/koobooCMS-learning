@@ -911,3 +911,6 @@ header .ctrl {
 .code-sample .code-sample h3.title:before {
   content: counter(codeCount2);
 }
+.code-sample .desc {
+    padding-left: 20px;
+}
